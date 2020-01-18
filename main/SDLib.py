@@ -39,13 +39,13 @@ class SDLib(object):
                 #self.trainingData,self.testData = DataSplit.crossValidation(self.trainingData,int(self.evaluation['-cv']))
 
         else:
-            print 'Evaluation is not well configured!'
+            print ('Evaluation is not well configured!')
             exit(-1)
 
         if config.contains('social'):
             self.socialConfig = LineConfig(self.config['social.setup'])
             self.relation = FileIO.loadRelationship(config,self.config['social'])
-        print 'preprocessing...'
+        print ('preprocessing...')
 
 
     def execute(self):
@@ -95,8 +95,8 @@ class SDLib(object):
             res.append('         '+labels[0]+'  '+'    '.join(np.array(values[0:3],dtype=str).tolist())+'   '+str(count[0])+'\n')
             res.append('         '+labels[1]+'  '+'    '.join(np.array(values[3:6],dtype=str).tolist())+'   '+str(count[1])+'\n\n')
             res.append('  avg/total   ' + '    '.join(np.array(values[6:9], dtype=str).tolist()) + '   ' + str(count[2]) + '\n')
-            print 'Total:'
-            print ''.join(res)
+            print ('Total:')
+            print (''.join(res))
                 # for line in lines[1:]:
                 #
                 # measure = self.measure[0][i].split(':')[0]
@@ -109,7 +109,7 @@ class SDLib(object):
             outDir = LineConfig(self.config['output.setup'])['-dir']
             fileName = self.config['methodName'] +'@'+currentTime+'-'+str(k)+'-fold-cv' + '.txt'
             FileIO.writeFile(outDir,fileName,res)
-            print 'The results have been output to '+abspath(LineConfig(self.config['output.setup'])['-dir'])+'\n'
+            print ('The results have been output to '+abspath(LineConfig(self.config['output.setup'])['-dir'])+'\n')
         else:
             if self.config.contains('social'):
                 method = self.config['methodName'] + '(self.config,self.trainingData,self.testData,self.labels,self.relation)'

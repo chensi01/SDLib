@@ -37,10 +37,10 @@ class BayesDetector(SDetection):
         # self.delta = float(self.config['delta'])
     def printAlgorConfig(self):
         super(BayesDetector, self).printAlgorConfig()
-        print 'k: %d' % self.negCount
-        print 'regR: %.5f' % self.regR
-        print 'filter: %d' % self.filter
-        print '=' * 80
+        print ('k: %d' % self.negCount)
+        print ('regR: %.5f' % self.regR)
+        print ('filter: %d' % self.filter)
+        print ('=' * 80)
 
     def initModel(self):
         super(BayesDetector, self).initModel()
@@ -52,7 +52,7 @@ class BayesDetector(SDetection):
         # constructing SPPMI matrix
         self.SPPMI = defaultdict(dict)
         D = len(self.dao.user)
-        print 'Constructing SPPMI matrix...'
+        print ('Constructing SPPMI matrix...')
         # for larger data set has many items, the process will be time consuming
         occurrence = defaultdict(dict)
         for user1 in self.dao.all_User:
@@ -83,8 +83,8 @@ class BayesDetector(SDetection):
                     val = max([log(occurrence[user1][user2] * D / (frequency[user1] * frequency[user2]), 2) - log(
                         self.negCount, 2), 0])
                 except ValueError:
-                    print self.SPPMI[user1][user2]
-                    print self.SPPMI[user1][user2] * D / (frequency[user1] * frequency[user2])
+                    print (self.SPPMI[user1][user2])
+                    print (self.SPPMI[user1][user2] * D / (frequency[user1] * frequency[user2]))
                 if val > 0:
                     if maxVal < val:
                         maxVal = val
@@ -99,7 +99,7 @@ class BayesDetector(SDetection):
     def buildModel(self):
         self.dao.ratings = dict(self.dao.trainingSet_u, **self.dao.testSet_u)
         #suspicous set
-        print 'Preparing sets...'
+        print ('Preparing sets...')
         self.sSet = defaultdict(dict)
         #normal set
         self.nSet = defaultdict(dict)

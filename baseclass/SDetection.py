@@ -25,14 +25,14 @@ class SDetection(object):
 
     def printAlgorConfig(self):
         "show algorithm's configuration"
-        print 'Algorithm:',self.config['methodName']
-        print 'Ratings dataSet:',abspath(self.config['ratings'])
+        print ('Algorithm:',self.config['methodName'])
+        print ('Ratings dataSet:',abspath(self.config['ratings']))
         if LineConfig(self.config['evaluation.setup']).contains('-testSet'):
-            print 'Test set:',abspath(LineConfig(self.config['evaluation.setup']).getOption('-testSet'))
+            print ('Test set:',abspath(LineConfig(self.config['evaluation.setup']).getOption('-testSet')))
         #print 'Count of the users in training set: ',len()
-        print 'Training set size: (user count: %d, item count %d, record count: %d)' %(self.dao.trainingSize())
-        print 'Test set size: (user count: %d, item count %d, record count: %d)' %(self.dao.testSize())
-        print '='*80
+        print ('Training set size: (user count: %d, item count %d, record count: %d)' %(self.dao.trainingSize()))
+        print ('Test set size: (user count: %d, item count %d, record count: %d)' %(self.dao.testSize()))
+        print ('='*80)
 
     def initModel(self):
         pass
@@ -55,23 +55,23 @@ class SDetection(object):
             self.printAlgorConfig()
         # load model from disk or build model
         if self.isLoad:
-            print 'Loading model %s...' % (self.foldInfo)
+            print ('Loading model %s...' % (self.foldInfo))
             self.loadModel()
         else:
-            print 'Initializing model %s...' % (self.foldInfo)
+            print ('Initializing model %s...' % (self.foldInfo))
             self.initModel()
-            print 'Building Model %s...' % (self.foldInfo)
+            print ('Building Model %s...' % (self.foldInfo))
             self.buildModel()
 
         # preict the ratings or item ranking
-        print 'Predicting %s...' % (self.foldInfo)
+        print ('Predicting %s...' % (self.foldInfo))
         prediction = self.predict()
         report = classification_report(self.testLabels, prediction, digits=4)
         currentTime = currentTime = strftime("%Y-%m-%d %H-%M-%S", localtime(time()))
         FileIO.writeFile(self.output['-dir'],self.algorName+'@'+currentTime+self.foldInfo,report)
         # save model
         if self.isSave:
-            print 'Saving model %s...' % (self.foldInfo)
+            print ('Saving model %s...' % (self.foldInfo))
             self.saveModel()
-        print report
+        print (report)
         return report

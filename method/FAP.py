@@ -22,7 +22,7 @@ class FAP(SDetection):
         sThreshold = int(0.5 * len(self.spammer))
         if self.s > sThreshold :
             self.s = sThreshold
-            print '*** seedUser is more than a half of spammer, so it is set to', sThreshold, '***'
+            print ('*** seedUser is more than a half of spammer, so it is set to', sThreshold, '***')
 
         # # predict top-k user as spammer
         self.k = int(self.config['topKSpam'])
@@ -30,7 +30,7 @@ class FAP(SDetection):
         kThreshold = int(0.5 * (len(self.dao.user) - self.s))
         if self.k > kThreshold:
             self.k = kThreshold
-            print '*** the number of top-K users is more than threshold value, so it is set to', kThreshold, '***'
+            print ('*** the number of top-K users is more than threshold value, so it is set to', kThreshold, '***')
     # product transition probability matrix self.TPUI and self.TPIU
 
     def __computeTProbability(self):
@@ -41,10 +41,10 @@ class FAP(SDetection):
 
         self.userUserIdDic = {}
         self.itemItemIdDic = {}
-        tmpUser = self.dao.user.values()
-        tmpUserId = self.dao.user.keys()
-        tmpItem = self.dao.item.values()
-        tmpItemId = self.dao.item.keys()
+        tmpUser = list(self.dao.user.values())
+        tmpUserId = list(self.dao.user.keys())
+        tmpItem = list(self.dao.item.values())
+        tmpItemId = list(self.dao.item.keys())
         for users in range(0, m):
             self.userUserIdDic[tmpUser[users]] = tmpUserId[users]
         for items in range(0, n):
@@ -70,11 +70,11 @@ class FAP(SDetection):
                     self.TPUI[i][j] = wPrime / otherItemW
                     self.TPIU[j][i] = wPrime / otherUserW
             if i % 100 == 0:
-                print 'progress: %d/%d' %(i,m)
+                print ('progress: %d/%d' %(i,m))
 
     def initModel(self):
         # construction of the bipartite graph
-        print "constructing bipartite graph..."
+        print ("constructing bipartite graph...")
         self.bipartiteGraphUI = {}
         for user in self.dao.trainingSet_u:
             tmpUserItemDic = {}  # user-item-point
@@ -89,7 +89,7 @@ class FAP(SDetection):
             # self.bipartiteGraphIU[item] = tmpItemUserDic
             self.bipartiteGraphUI[user] = tmpUserItemDic
         # we do the polish in computing the transition probability
-        print "computing transition probability..."
+        print ("computing transition probability...")
         self.__computeTProbability()
 
     def isConvergence(self, PUser, PUserOld):
@@ -140,7 +140,7 @@ class FAP(SDetection):
             PItem = np.dot(self.TPIU, PUser)
             PUser = np.dot(self.TPUI, PItem)
             iterator += 1
-            print self.foldInfo,'iteration', iterator
+            print (self.foldInfo,'iteration', iterator)
 
         PUserDict = {}
         userId = 0
@@ -150,7 +150,8 @@ class FAP(SDetection):
         for j in self.seedUser:
             del PUserDict[j]
 
-        self.PSort = sorted(PUserDict.iteritems(), key=lambda d: d[1], reverse=True)
+        # self.PSort = sorted(PUserDict.iteritems(), key=lambda d: d[1], reverse=True)
+        self.PSort = sorted(PUserDict.items(), key=lambda d: d[1], reverse=True)
 
 
     def predict(self):

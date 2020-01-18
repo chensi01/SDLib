@@ -58,11 +58,13 @@ class RatingDAO(object):
                 #self.trainingSet_u[userName][itemName] = float(rating)
                 self.trainingSet_i[item][user] = self.trainingData[user][item]
                 # order the user
-                if not self.user.has_key(user):
+                # if not self.user.has_key(user):
+                if not user in self.user:
                     self.user[user] = len(self.user)
                     self.id2user[self.user[user]] = user
                 # order the item
-                if not self.item.has_key(item):
+                # if not self.item.has_key(item):
+                if not item in self.item:
                     self.item[item] = len(self.item)
                     self.id2item[self.item[item]] = item
                 self.trainingSet_i[item][user] = self.trainingData[user][item]
