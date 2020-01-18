@@ -115,7 +115,8 @@ class SDLib(object):
                 method = self.config['methodName'] + '(self.config,self.trainingData,self.testData,self.labels,self.relation)'
             else:
                 method = self.config['methodName'] + '(self.config,self.trainingData,self.testData,self.labels)'
-            eval(method).execute()
+            result = eval(method).execute()
+            return result
 
 
 def run(measure,algor,order):

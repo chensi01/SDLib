@@ -55,7 +55,15 @@ if __name__ == '__main__':
     else:
         print('Error num!')
         exit(-1)
-    sd = SDLib(conf)
-    sd.execute()
-    e = time.clock()
-    print("Run time: %f s" % (e - s))
+    # sd = SDLib(conf)
+    # result = sd.execute()
+    # e = time.clock()
+    # print("Run time: %f s" % (e - s))
+    for i in range(1):
+        result = []
+        for method in ['gan', 'G0', 'G1','average', 'random', 'segment', 'bandwagon']:
+            conf = Config('../config/AUSH/' + method + '.conf')
+            sd = SDLib(conf)
+            result_ = sd.execute()
+            result.append('\t'.join(result_))
+        print('\n'.join(result))

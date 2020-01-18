@@ -69,8 +69,8 @@ class FAP(SDetection):
                     wPrime = w
                     self.TPUI[i][j] = wPrime / otherItemW
                     self.TPIU[j][i] = wPrime / otherUserW
-            if i % 100 == 0:
-                print ('progress: %d/%d' %(i,m))
+            # if i % 100 == 0:
+            #     print ('progress: %d/%d' %(i,m))
 
     def initModel(self):
         # construction of the bipartite graph
@@ -109,7 +109,7 @@ class FAP(SDetection):
         self.predLabels = [0 for i in range(m)]
 
         # preserve seedUser Index
-        self.seedUser = []
+        self.seedUser = []#[964, 970, 976, 966, 988]#[]
         randDict = {}
         for i in range(0, self.s):
             randNum = random.randint(0, len(self.spammer) - 1)
@@ -117,7 +117,7 @@ class FAP(SDetection):
                 randNum = random.randint(0, len(self.spammer) - 1)
             randDict[randNum] = 0
             self.seedUser.append(int(self.spammer[randNum]))
-            # print len(randDict), randDict
+        print (len(randDict), randDict)
 
         #initial user and item spam probability
         for j in range(0, m):

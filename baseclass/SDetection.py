@@ -73,5 +73,6 @@ class SDetection(object):
         if self.isSave:
             print ('Saving model %s...' % (self.foldInfo))
             self.saveModel()
-        print (report)
-        return report
+        # print (report)
+        # return report
+        return [i for i in report.split('\n') if len(i)>0][2].split()
