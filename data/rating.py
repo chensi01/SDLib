@@ -77,11 +77,13 @@ class RatingDAO(object):
 
         for i, user in enumerate(self.testData):
             # order the user
-            if not self.user.has_key(user):
+            # if not self.user.has_key(user):
+            if not user in self.user:
                 self.all_User[user] = len(self.all_User)
             for item in self.testData[user]:
                 # order the item
-                if not self.item.has_key(item):
+                # if not self.item.has_key(item):
+                if not item in self.item:
                     self.all_Item[item] = len(self.all_Item)
                 #self.testSet_u[userName][itemName] = float(rating)
                 self.testSet_i[item][user] = self.testData[user][item]
